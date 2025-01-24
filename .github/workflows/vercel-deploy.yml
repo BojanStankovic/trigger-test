@@ -1,15 +1,10 @@
 name: Deploy to Vercel
 
-# on:
-#   workflow_run:
-#     workflows: ['DB Sync']
-#     types:
-#       - completed
-
 on:
-  push:
-    branches:
-      - main
+  workflow_run:
+    workflows: ['DB Sync']
+    types:
+      - completed
 
 jobs:
   vercel-deploy:
