@@ -12,11 +12,28 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install dependencies
-        run: npm install
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
 
-      - name: Build
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Check Next.js Configuration
+        run: |
+          echo "Node version:"
+          node --version
+          echo "NPM version:"
+          npm --version
+          echo "Checking Next.js config:"
+          npx next telemetry status
+
+      - name: Build Project
         run: npm run build
+        env:
+          NODE_OPTIONS: '--max_old_space_size=4096'
 
       - name: Deploy to Vercel
         uses: amondnet/vercel-action@v25
