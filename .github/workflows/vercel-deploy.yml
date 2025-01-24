@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@latest
+        uses: actions/checkout@v4
 
       - name: Install dependencies
         run: npm install
@@ -19,7 +19,7 @@ jobs:
         run: npm run build
 
       - name: Deploy to Vercel
-        uses: amondnet/vercel-action@latest
+        uses: amondnet/vercel-action@v25
         with:
           vercel-token: ${{ secrets.GH_DEPLOYMENT_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
