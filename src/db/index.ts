@@ -1,9 +1,11 @@
 import 'dotenv/config';
 import { drizzle } from 'drizzle-orm/node-postgres';
-// import { migrate } from 'drizzle-orm/node-postgres/migrator';
+import { Pool } from 'pg';
 
-export const db = drizzle(process.env.DATABASE_URL!);
-// const migrationsFolderPath = './drizzle';
-// await migrate(db, {
-//   migrationsFolder: migrationsFolderPath,
-// });
+const connectionString = process.env.DATABASE_URL!;
+const pool = new Pool({
+  connectionString,
+  ssl: true,
+});
+
+export const db = drizzle(pool);
