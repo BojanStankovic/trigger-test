@@ -5,38 +5,40 @@ import fs from 'fs';
 import path from 'path';
 
 // Import seed scripts
-import { seedUsers } from './db/seeds/users';
+import { seedUsers } from './src/db/seeds/users';
 
 (async () => {
-  // const client = new Client({
-  //   connectionString: process.env.DATABASE_URL, // Use your database URL
-  // });
+  // Extract database connection details from the DATABASE_URL
+  const dbUrl = process.env.DATABASE_URL!;
+  if (!dbUrl) {
+    throw new Error('DATABASE_URL not set');
+  }
+
+  const { host, port, user, password, database } = parseDbUrl(dbUrl);
 
   const client = new Client({
-    host: 'localhost',
-    port: 5432,
-    user: 'postgres',
-    password: 'admin1234',
-    database: 'postgres',
+    host,
+    port: parseInt(port),
+    user,
+    password,
+    database,
   });
 
   const db = drizzle(client);
 
   try {
-    // Connect to the database
     await client.connect();
 
-    // Step 1: Run Drizzle migrations
     console.log('Running Drizzle migrations...');
     await migrate(db, {
       migrationsFolder: './drizzle',
     });
+    console.log('Drizzle migrations completed successfully.');
 
-    // Step 2: Seed data
-    // console.log('Seeding data...');
+    console.log('Seeding data...');
     await seedUsers(db);
+    console.log('Data seeding completed successfully.');
 
-    // Step 3: Apply triggers
     console.log('Applying database triggers...');
     const sqlFolder = path.join(__dirname, 'db/triggers');
     const sqlFiles = fs.readdirSync(sqlFolder).filter((file) => file.endsWith('.sql'));
@@ -47,12 +49,25 @@ import { seedUsers } from './db/seeds/users';
       console.log(`Applying ${file}...`);
       await client.query(sqlContent);
     }
+    console.log('Database triggers applied successfully.');
 
     console.log('Database initialization completed successfully.');
   } catch (err) {
     console.error('Error during database initialization:', err);
   } finally {
-    // Close the database connection
     await client.end();
   }
 })();
+
+function parseDbUrl(dbUrl: string) {
+  const { username, password, hostname, port, pathname } = new URL(dbUrl);
+  const database = pathname.slice(1); // remove leading "/"
+
+  return {
+    host: hostname,
+    port: port,
+    user: username,
+    password: password,
+    database,
+  };
+}
