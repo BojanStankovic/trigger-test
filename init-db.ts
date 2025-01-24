@@ -2,6 +2,7 @@ import { drizzle } from 'drizzle-orm/node-postgres';
 import { migrate } from 'drizzle-orm/node-postgres/migrator';
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import pkg from 'pg';
 const { Client } = pkg;
 
@@ -42,6 +43,8 @@ import { seedUsers } from './src/db/seeds/users';
     console.log('Data seeding completed successfully.');
 
     console.log('Applying database triggers...');
+    const __filename = fileURLToPath(import.meta.url);
+    const __dirname = path.dirname(__filename);
     const sqlFolder = path.join(__dirname, 'db/triggers');
     const sqlFiles = fs.readdirSync(sqlFolder).filter((file) => file.endsWith('.sql'));
 

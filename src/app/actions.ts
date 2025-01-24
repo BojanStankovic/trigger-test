@@ -6,7 +6,6 @@ export const getUsers = async () => {
   return users;
 };
 
-// Server Action for fetching users
 export async function fetchUserAudits() {
   try {
     const userAudits = await db.select().from(userAuditsTable);

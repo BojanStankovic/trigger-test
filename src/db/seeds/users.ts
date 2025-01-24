@@ -12,12 +12,12 @@ export const seedUsers = async (
       {
         name: 'John',
         age: 30,
-        email: 'john@example.com',
+        email: `john${Math.floor(Math.random() * 1000000)}@example.com`,
       },
       {
         name: 'Jane',
         age: 25,
-        email: 'jane@example.com',
+        email: `jane${Math.floor(Math.random() * 1000000)}@example.com`,
       },
     ])
     .execute();
