@@ -2,7 +2,7 @@ import { drizzle } from 'drizzle-orm/node-postgres';
 import { migrate } from 'drizzle-orm/node-postgres/migrator';
 import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
+// import { fileURLToPath } from 'url';
 import pkg from 'pg';
 const { Client } = pkg;
 
