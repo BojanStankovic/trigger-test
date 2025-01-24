@@ -1,10 +1,15 @@
 name: DB Sync
 
+# on:
+#   workflow_run:
+#     workflows: ['Deploy to Vercel'] # Matches the 'name' in vercel-deploy.yml
+#     types:
+#       - completed
+
 on:
-  workflow_run:
-    workflows: ['Deploy to Vercel'] # Matches the 'name' in vercel-deploy.yml
-    types:
-      - completed
+  push:
+    branches:
+      - main
 
 jobs:
   sync-database:
