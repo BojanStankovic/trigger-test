@@ -34,9 +34,9 @@ jobs:
           npx next telemetry status
 
       - name: Build Project
-        run: npm run build
         env:
-          NODE_OPTIONS: '--max_old_space_size=4096'
+          DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: npm run build
 
       - name: Deploy to Vercel
         uses: amondnet/vercel-action@v25
