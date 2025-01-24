@@ -18,4 +18,4 @@ jobs:
       - name: DB sync
         env:
           DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
-        run: npx ts-node ./src/db/init-db.ts
+        run: npx ts-node ../src/db/init-db.ts
