@@ -23,6 +23,7 @@ import { seedUsers } from './src/db/seeds/users';
     user,
     password,
     database,
+    ssl: true,
   });
 
   const db = drizzle(client);
