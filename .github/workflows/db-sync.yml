@@ -1,0 +1,25 @@
+name: DB Sync
+
+on:
+  workflow_run:
+    workflows: ['Deploy to Vercel'] # Matches the 'name' in vercel-deploy.yml
+    types:
+      - completed
+
+jobs:
+  sync-database:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: DB sync
+        env:
+          DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: |
+          # If your script is TypeScript, run it directly with ts-node:
+          npx ts-node db-triggers/src/init-db.ts
