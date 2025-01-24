@@ -5,42 +5,58 @@ on:
     branches:
       - main
 
+# jobs:
+#   vercel-deploy:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4
+
+#       - name: Set up Node.js
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version: '20'
+#           cache: 'npm'
+
+#       - name: Install Dependencies
+#         run: npm install
+
+#       - name: Clean Install
+#         run: npm ci
+
+#       - name: Check Next.js Configuration
+#         run: |
+#           echo "Node version:"
+#           node --version
+#           echo "NPM version:"
+#           npm --version
+#           echo "Checking Next.js config:"
+#           npx next telemetry status
+
+#       - name: Build Project
+#         run: npm run build
+#         env:
+#           NODE_OPTIONS: '--max_old_space_size=4096'
+
+#       - name: Deploy to Vercel
+#         uses: amondnet/vercel-action@v25
+#         with:
+#           vercel-token: ${{ secrets.GH_DEPLOYMENT_TOKEN }}
+#           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+#           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+
 jobs:
-  vercel-deploy:
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-
-      - name: Install Dependencies
-        run: npm install
-
-      - name: Clean Install
-        run: npm ci
-
-      - name: Check Next.js Configuration
-        run: |
-          echo "Node version:"
-          node --version
-          echo "NPM version:"
-          npm --version
-          echo "Checking Next.js config:"
-          npx next telemetry status
-
-      - name: Build Project
-        run: npm run build
-        env:
-          NODE_OPTIONS: '--max_old_space_size=4096'
-
-      - name: Deploy to Vercel
-        uses: amondnet/vercel-action@v25
+      - uses: actions/checkout@v2
+      #  your build commands
+      # - run: |
+      #    ng build --prod
+      - uses: amondnet/vercel-action@v25 #deploy
         with:
           vercel-token: ${{ secrets.GH_DEPLOYMENT_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel-args: '--prod'
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID}}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID}}
+          working-directory: ./sub-directory
