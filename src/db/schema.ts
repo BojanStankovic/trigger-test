@@ -20,3 +20,19 @@ export const userAuditsRelations = relations(userAuditsTable, ({ one }) => ({
     references: [usersTable.id],
   }),
 }));
+
+export const rolesTable = pgTable('roles', {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  user_id: integer().notNull(),
+  name: varchar({ length: 255 }).notNull(),
+  description: varchar({ length: 255 }).notNull(),
+  created_at: timestamp().notNull().defaultNow(),
+  updated_at: timestamp().notNull().defaultNow(),
+});
+
+export const rolesRelations = relations(rolesTable, ({ one }) => ({
+  user: one(usersTable, {
+    fields: [rolesTable.user_id],
+    references: [usersTable.id],
+  }),
+}));

@@ -1,21 +1,21 @@
-# name: DB Sync
+name: DB Sync
 
-# on:
-#   push:
-#     branches:
-#       - main
+on:
+  push:
+    branches:
+      - main
 
-# jobs:
-#   sync-database:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Check out repository
-#         uses: actions/checkout@v3
+jobs:
+  sync-database:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
 
-#       - name: Install dependencies
-#         run: npm install
+      - name: Install dependencies
+        run: npm install
 
-#       - name: DB sync
-#         env:
-#           DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
-#         run: npx tsx ./init-db.ts
+      - name: DB sync
+        env:
+          DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: npx tsx ./init-db.ts
