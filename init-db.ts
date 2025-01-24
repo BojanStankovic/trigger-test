@@ -1,8 +1,9 @@
 import { drizzle } from 'drizzle-orm/node-postgres';
 import { migrate } from 'drizzle-orm/node-postgres/migrator';
-import { Client } from 'pg';
 import fs from 'fs';
 import path from 'path';
+import pkg from 'pg';
+const { Client } = pkg;
 
 // Import seed scripts
 import { seedUsers } from './src/db/seeds/users';
