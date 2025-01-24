@@ -45,11 +45,16 @@ import { seedUsers } from './src/db/seeds/users';
     console.log('Applying database triggers...');
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = path.dirname(__filename);
+    console.log('Current Working Directory:', process.cwd());
+    console.log('Full script path:', import.meta.url);
     const sqlFolder = path.join(__dirname, 'db/triggers');
     console.log('SQL Folder Path!!!!!!!!!!!!!!!!!!:', sqlFolder);
     const sqlFolder2 = path.join(process.cwd(), 'src/db/triggers');
-    console.log('SQL Folder Path!!!!!!!!!!!!!!!!!!:', sqlFolder2);
-    const sqlFiles = fs.readdirSync(sqlFolder).filter((file) => file.endsWith('.sql'));
+    console.log('SQL Folder Path 2!!!!!!!!!!!!!!!!!!:', sqlFolder2);
+    const sqlFolder3 = path.resolve(process.cwd(), 'triggers');
+    console.log('SQL Folder Path 3!!!!!!!!!!!!!!!!!!:', sqlFolder3);
+    console.log('Directory contents:', fs.readdirSync(sqlFolder3));
+    const sqlFiles = fs.readdirSync(sqlFolder3).filter((file) => file.endsWith('.sql'));
 
     for (const file of sqlFiles) {
       const sqlPath = path.join(sqlFolder, file);
