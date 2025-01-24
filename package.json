@@ -10,7 +10,8 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:seed": "ts-node ./src/db/seeds/users.ts",
-    "db:deploy": "npm run db:migrate && npm run db:seed"
+    "db:deploy": "npm run db:migrate && npm run db:seed",
+    "init-db": "node --loader ts-node/esm init-db.ts"
   },
   "dependencies": {
     "dotenv": "^16.4.7",
