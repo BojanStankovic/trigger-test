@@ -45,15 +45,15 @@ import { seedUsers } from './src/db/seeds/users';
     console.log('Applying database triggers...');
     // const __filename = fileURLToPath(import.meta.url);
     // const __dirname = path.dirname(__filename);
-    const sqlFolder = path.join(process.cwd(), 'src', 'db', 'triggers');
 
-    // Add error handling and logging
+    const sqlFolder = path.join(process.cwd(), 'src', 'db', 'triggers');
     if (!fs.existsSync(sqlFolder)) {
       console.error(`SQL Folder not found: ${sqlFolder}`);
       console.error(`Current working directory: ${process.cwd()}`);
       console.error(`Full path resolution: ${path.resolve(sqlFolder)}`);
       throw new Error('SQL Triggers folder not found');
     }
+
     const sqlFiles = fs.readdirSync(sqlFolder).filter((file) => file.endsWith('.sql'));
 
     for (const file of sqlFiles) {

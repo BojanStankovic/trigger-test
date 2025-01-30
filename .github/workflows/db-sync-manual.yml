@@ -1,0 +1,19 @@
+name: DB Sync Manual
+
+on:
+  workflow_dispatch: # Enables manual triggering
+
+jobs:
+  sync-database:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: DB sync (manual)
+        env:
+          DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: npx tsx ./init-db.ts
